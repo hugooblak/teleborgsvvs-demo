@@ -1,0 +1,367 @@
+/*
+Theme Name: Teleborgs VVS AB
+Theme URI: https://github.com/hugooblak/teleborgsvvs-demo
+Author: Hugo Oblak
+Description: Lead generation block theme for a fictional roofing company. Built around conversion basics: one clear offer, a short multi-step quote form, trust near every call to action, and a sticky call bar on phones. No page builder.
+Requires at least: 6.6
+Tested up to: 6.6
+Requires PHP: 7.4
+Version: 1.0.0
+License: GNU General Public License v2 or later
+License URI: https://www.gnu.org/licenses/gpl-2.0.html
+Text Domain: teleborgsvvs
+*/
+
+/* Only rules that theme.json can't express live here. */
+
+/* Keyboard focus: always visible, 3px, high contrast. */
+:where(a, button, input, select, textarea, summary, [tabindex]):focus-visible {
+	outline: 3px solid var(--wp--preset--color--pine);
+	outline-offset: 2px;
+	border-radius: 4px;
+}
+.is-style-section-dark :where(a, button, summary):focus-visible,
+.te-mobile-cta :where(a):focus-visible { outline-color: var(--wp--preset--color--sun); }
+
+.skip-link.screen-reader-text:focus { background: var(--wp--preset--color--ink); color: #fff; }
+
+html { scroll-behavior: smooth; scroll-padding-top: 96px; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+
+/* Sticky header on wide screens keeps the quote button in reach. */
+@media (min-width: 782px) {
+	.wp-site-blocks > header.wp-block-template-part { position: sticky; top: 0; z-index: 50; }
+	.admin-bar .wp-site-blocks > header.wp-block-template-part { top: 32px; }
+}
+.te-header { box-shadow: 0 1px 0 var(--wp--preset--color--line); }
+
+/* Logo mark drawn with CSS so no image request is needed. */
+.te-brand .wp-block-site-title a { display: inline-flex; align-items: center; gap: .55rem; }
+.te-brand .wp-block-site-title a::before {
+	content: ""; width: 30px; height: 30px; flex: none; border-radius: 8px;
+	background: var(--wp--preset--color--pine) url("assets/img/mark.svg") center / 20px no-repeat;
+}
+
+/* Header phone: big tap target, number never wraps. */
+.te-phone a { text-decoration: none; font-weight: 700; white-space: nowrap; color: var(--wp--preset--color--ink); }
+.te-phone small { display: block; font-weight: 500; color: var(--wp--preset--color--ink-soft); font-size: .8125rem; }
+@media (max-width: 959px) { .te-header .te-phone { display: none; } }
+@media (max-width: 480px) { .te-header .te-header-btn .wp-block-button__link { padding: .7rem .9rem; font-size: .9375rem; } }
+
+/* Small label above headings. */
+.is-style-eyebrow {
+	text-transform: uppercase; letter-spacing: .08em; font-size: .8125rem !important; font-weight: 700;
+	color: var(--wp--preset--color--pine);
+}
+.is-style-section-dark .is-style-eyebrow { color: var(--wp--preset--color--sun); }
+
+/* Tick list. */
+ul.is-style-checklist { list-style: none; padding-left: 0; }
+ul.is-style-checklist li { position: relative; padding-left: 1.9rem; margin-bottom: .45rem; }
+ul.is-style-checklist li::before {
+	content: ""; position: absolute; left: 0; top: .22em; width: 1.25rem; height: 1.25rem; border-radius: 50%;
+	background: var(--wp--preset--color--pine-light) url("assets/img/tick.svg") center / 12px no-repeat;
+}
+.is-style-section-dark ul.is-style-checklist li::before { background-color: rgba(255,255,255,.14); background-image: url("assets/img/tick-light.svg"); }
+
+/* Star rating text (the stars are decorative; the number is the real text). */
+.te-stars::before { content: "★★★★★"; content: "★★★★★" / ""; color: var(--wp--preset--color--sun); letter-spacing: 2px; margin-right: .4rem; }
+
+/* Trust strip items. */
+.te-trust p { margin: 0; font-weight: 600; font-size: var(--wp--preset--font-size--small); }
+
+/* Step numbers. */
+.te-step-num {
+	display: inline-grid; place-items: center; width: 2.5rem; height: 2.5rem; border-radius: 50%;
+	background: var(--wp--preset--color--pine); color: #fff !important; font-weight: 800; margin: 0;
+}
+
+/* Price guide table. */
+.te-price-table table { border-collapse: collapse; width: 100%; }
+.te-price-table th, .te-price-table td { border: 0; border-bottom: 1px solid var(--wp--preset--color--line); padding: .85rem .6rem; text-align: left; }
+.te-price-table thead th { font-size: var(--wp--preset--font-size--small); color: var(--wp--preset--color--ink-soft); border-bottom-width: 2px; }
+.te-price-table td:last-child { font-weight: 700; white-space: nowrap; }
+.te-price-table figcaption { font-size: var(--wp--preset--font-size--small); color: var(--wp--preset--color--ink-soft); text-align: left; }
+
+/* FAQ (core Details block). */
+.wp-block-details summary { cursor: pointer; font-weight: 700; list-style: none; position: relative; padding-right: 2rem; }
+.wp-block-details summary::-webkit-details-marker { display: none; }
+.wp-block-details summary::after {
+	content: "+"; position: absolute; right: .25rem; top: -.1rem; font-size: 1.5rem; line-height: 1; font-weight: 400;
+	color: var(--wp--preset--color--pine);
+}
+.wp-block-details[open] summary::after { content: "−"; }
+.wp-block-details > :not(summary) { margin-top: .6rem; color: var(--wp--preset--color--ink-soft); }
+
+/* Cards lift a little on hover when they contain a link. */
+.is-style-card:has(a) { transition: box-shadow .15s ease; }
+.is-style-card:has(a):hover { box-shadow: var(--wp--preset--shadow--card); }
+
+/* Sticky call bar: phones and tablets (the header phone number shows from 960px up). */
+.wp-block-buttons.te-mobile-cta { display: none; }
+@media (max-width: 959px) {
+	.wp-block-buttons.te-mobile-cta {
+		display: flex; position: fixed; left: 0; right: 0; bottom: 0; z-index: 60;
+		padding: .6rem .75rem calc(.6rem + env(safe-area-inset-bottom));
+		background: var(--wp--preset--color--ink); gap: .6rem;
+		box-shadow: 0 -6px 24px rgba(15,34,51,.2);
+	}
+	.te-mobile-cta .wp-block-button { flex: 1; }
+	.te-mobile-cta .wp-block-button__link { width: 100%; padding: .8rem .5rem; font-size: 1rem; }
+	.te-mobile-cta .is-style-outline .wp-block-button__link { color: #fff; border-color: rgba(255,255,255,.5); }
+	body:has(.te-mobile-cta) { padding-bottom: 76px; }
+}
+
+/* Footer links: no underline until hover. */
+.te-footer a { text-decoration: none; }
+.te-footer a:hover { text-decoration: underline; }
+.te-footer ul { list-style: none; padding-left: 0; }
+.te-footer li { margin-bottom: .4rem; }
+
+/* Long words and numbers never force sideways scroll. */
+h1, h2, h3, p, li { overflow-wrap: break-word; }
+
+.te-lift { box-shadow: var(--wp--preset--shadow--lift); }
+.te-sample { color: var(--wp--preset--color--ink-soft); font-weight: 400; }
+.is-style-section-dark .te-sample { color: #C9D3DB; }
+.te-header .wp-block-button__link { white-space: nowrap; }
+
+/* Sections sit flush: no gap between the main content and the footer. */
+.wp-site-blocks > * + * { margin-block-start: 0; }
+
+/* Comparison table: emphasise our column, not the competitor's. */
+.te-compare-table td:last-child { font-weight: 400; color: var(--wp--preset--color--ink-soft); white-space: normal; }
+.te-compare-table td:nth-child(2) { font-weight: 700; }
+
+/* Phones: logo on one line, and get the hero form closer to the top of the screen. */
+@media (max-width: 600px) {
+	.te-header .wp-block-site-title { font-size: 1.0625rem !important; white-space: nowrap; }
+	.te-brand .wp-block-site-title a::before { width: 26px; height: 26px; background-size: 17px; }
+	.te-hide-mobile { display: none !important; }
+	.te-price-table th, .te-price-table td { padding: .7rem .35rem; font-size: .9375rem; hyphens: auto; }
+	.te-price-table:not(.te-compare-table) th:nth-child(2), .te-price-table:not(.te-compare-table) td:nth-child(2) { display: none; }
+	.te-compare-table th, .te-compare-table td { font-size: .875rem; }
+}
+
+@media (max-width: 600px) {
+	.te-header .wp-block-group { gap: .6rem !important; }
+	.te-focus-phone a { white-space: nowrap; }
+}
+/* Quote funnel pages: sand all the way down, even when the page is short. */
+body.page-template-page-focus { background: var(--wp--preset--color--sand); }
+
+/* Articles and simple pages: calmer heading sizes than landing page sections. */
+.te-prose h2 { font-size: var(--wp--preset--font-size--x-large); margin-top: var(--wp--preset--spacing--50); }
+.te-prose h3 { margin-top: var(--wp--preset--spacing--40); }
+
+/* Reserve the illustration's space before it loads (no layout shift). */
+.wp-block-image img[src$="house.svg"] { aspect-ratio: 560 / 400; width: 100%; height: auto; }
+
+/* Comparison table fits a phone screen without sideways scrolling. */
+@media (max-width: 600px) {
+	.wp-block-table.te-compare-table { overflow-x: visible; }
+	.te-compare-table table { table-layout: fixed; width: 100%; }
+	.te-compare-table th, .te-compare-table td { overflow-wrap: anywhere; }
+}
+
+/* Very small phones: the sticky bottom bar already has the quote button, so the header keeps just logo and menu. */
+@media (max-width: 359px) { .te-header .te-header-btn { display: none; } }
+
+/* The quote form script adds this class while a form is on screen (see Teleborgs VVS AB Leads). */
+@media (max-width: 959px) {
+	.wp-block-buttons.te-mobile-cta { transition: transform .2s ease; }
+	.npl-form-in-view .wp-block-buttons.te-mobile-cta { transform: translateY(110%); visibility: hidden; transition: transform .2s ease, visibility 0s .2s; }
+}
+@media (prefers-reduced-motion: reduce) { .wp-block-buttons.te-mobile-cta { transition: none; } }
+
+/* Tablets: keep the menu on one line. */
+@media (min-width: 600px) and (max-width: 1079px) {
+	.te-header .wp-block-navigation { font-size: .875rem; }
+	.te-header .wp-block-navigation .wp-block-navigation__container { gap: 1rem !important; }
+	.te-header .wp-block-group { gap: 1rem !important; }
+	.te-header .wp-block-site-title { white-space: nowrap; font-size: 1.0625rem !important; }
+}
+
+/* --- Hero: photo-led, content sitting on the image ------------------- */
+.te-sec-hero { position: relative; }
+.te-sec-hero .wp-block-cover__inner-container { padding-block: var(--wp--preset--spacing--60); }
+.te-sec-hero h1 { line-height: 1.04; letter-spacing: -0.02em; text-wrap: balance; }
+.te-sec-hero h1 em { font-style: italic; color: var(--wp--preset--color--sun); }
+
+/* Stat trio under the hero buttons */
+.te-hero-stats { display: flex; flex-wrap: wrap; align-items: flex-start;
+  gap: 0; margin-top: var(--wp--preset--spacing--50); }
+/* eyebrow sits on the dark hero image - pine has no contrast there */
+.te-sec-hero .is-style-eyebrow { color: var(--wp--preset--color--sun); }
+.te-hero-stats p {
+  margin: 0; padding: 0 var(--wp--preset--spacing--40);
+  border-left: 1px solid rgba(255,255,255,.22); line-height: 1.25;
+}
+.te-hero-stats p:first-child { padding-left: 0; border-left: 0; }
+.te-hero-stats strong { font-size: var(--wp--preset--font-size--x-large); display: block; }
+.te-hero-stats span {
+  font-size: var(--wp--preset--font-size--small);
+  color: #C9D3DB; text-transform: uppercase; letter-spacing: .08em;
+}
+
+/* The review quote inside the hero card */
+.te-hero-review {
+  margin: var(--wp--preset--spacing--30) 0 var(--wp--preset--spacing--40);
+  padding: var(--wp--preset--spacing--30) 0 0;
+  border: 0; border-top: 1px solid var(--wp--preset--color--line);
+}
+.te-hero-review p { margin: 0 0 .4rem; }
+.te-hero-review cite {
+  font-style: normal; font-size: .8125rem;
+  color: var(--wp--preset--color--ink-soft);
+}
+
+@media (max-width: 781px) {
+  .te-sec-hero h1 { font-size: 2.35rem; }
+  /* keep the three stats on one row instead of wrapping 2 + 1 */
+  .te-hero-stats { display: grid; grid-template-columns: repeat(3, 1fr); }
+  .te-hero-stats p { padding: 0 var(--wp--preset--spacing--20); }
+  .te-hero-stats strong { font-size: var(--wp--preset--font-size--large); }
+  .te-hero-stats span { font-size: 0.75rem; letter-spacing: .06em; }
+}
+
+/* --- Fact bar: one thin dark line under the hero, no icons ----------- */
+.te-factbar { gap: var(--wp--preset--spacing--40); }
+.te-factbar p { margin: 0; opacity: .92; }
+.te-factbar p + p { position: relative; padding-left: var(--wp--preset--spacing--40); }
+.te-factbar p + p::before {
+  content: ""; position: absolute; left: 0; top: .25em; bottom: .25em;
+  width: 1px; background: rgba(255,255,255,.22);
+}
+
+/* --- Service cards: the photo is the card, not an icon inside it ----- */
+.te-card { display: flex; flex-direction: column; }
+.te-card-img { margin: 0 0 var(--wp--preset--spacing--30); }
+.te-card-img img {
+  width: 100%; aspect-ratio: 4 / 3; object-fit: cover;
+  border-radius: 10px; display: block;
+  transition: transform .25s ease, filter .25s ease;
+}
+.te-card:hover .te-card-img img { transform: scale(1.02); filter: brightness(1.06); }
+.te-card-kicker {
+  margin: 0 0 .15rem; text-transform: uppercase; letter-spacing: .09em;
+  font-weight: 600; color: var(--wp--preset--color--pine);
+}
+.te-card h3 { margin: 0 0 .4rem; }
+/* reserve two lines so a wrapping title doesn't push its card's text
+   out of line with the others in the row */
+@media (min-width: 782px) { .te-card h3 { min-height: 2.3em; } }
+.te-card h3 a { text-decoration: none; color: inherit; }
+.te-card:hover h3 a { text-decoration: underline; text-underline-offset: 3px; }
+.te-card p:last-child { margin-bottom: 0; }
+
+/* --- ROT calculation ------------------------------------------------- */
+.te-rot-calc .is-style-eyebrow { margin-bottom: var(--wp--preset--spacing--30); }
+.te-rot-row { gap: var(--wp--preset--spacing--30); align-items: baseline;
+  padding: .55rem 0; border-bottom: 1px solid var(--wp--preset--color--line); }
+.te-rot-row p { margin: 0; }
+.te-rot-row p:last-child { white-space: nowrap; }
+.te-rot-minus p:last-child strong { color: var(--wp--preset--color--pine); }
+.te-rot-total { border-bottom: 0; border-top: 2px solid var(--wp--preset--color--ink);
+  margin-top: .3rem; padding-top: .8rem; }
+.te-rot-total p { font-size: var(--wp--preset--font-size--large); }
+.te-rot-total p:last-child strong { font-size: var(--wp--preset--font-size--x-large); }
+.te-rot-calc .wp-block-buttons { margin-top: var(--wp--preset--spacing--40); }
+
+/* --- Kommun links ---------------------------------------------------- */
+.te-orter { gap: .55rem; }
+.te-orter .te-ort { margin: 0; }
+.te-orter .te-ort a {
+  display: inline-block; padding: .5rem .9rem; border-radius: 999px;
+  border: 1px solid rgba(255,255,255,.26); color: #fff; text-decoration: none;
+  font-size: var(--wp--preset--font-size--small); transition: background .15s ease, border-color .15s ease;
+}
+.te-orter .te-ort a:hover { background: rgba(255,255,255,.10); border-color: rgba(255,255,255,.5); }
+
+@media (max-width: 781px) {
+  /* stacked on phones, so the vertical rules become stray ticks - drop them */
+  .te-factbar { gap: .35rem var(--wp--preset--spacing--30); }
+  .te-factbar p + p { padding-left: 0; }
+  .te-factbar p + p::before { display: none; }
+  .te-rot-total p:last-child strong { font-size: var(--wp--preset--font-size--large); }
+}
+
+/* --- Omdömen --------------------------------------------------------- */
+.te-rating { position: sticky; top: var(--wp--preset--spacing--40); }
+.te-rating-num {
+  font-size: 4.5rem; line-height: 1; font-weight: 800; margin: 0;
+  letter-spacing: -.03em; color: var(--wp--preset--color--ink);
+}
+.te-stars-lg::before { font-size: 1.35rem; letter-spacing: 3px; }
+.te-rating p { margin: 0 0 .5rem; }
+.te-review {
+  padding: var(--wp--preset--spacing--40) 0;
+  border-bottom: 1px solid var(--wp--preset--color--line);
+}
+.te-review:first-child { padding-top: 0; }
+.te-review:last-child { border-bottom: 0; padding-bottom: 0; }
+.te-review p { margin: 0 0 .5rem; }
+.te-review p:nth-child(2) { font-size: var(--wp--preset--font-size--large); line-height: 1.5; }
+.te-review-by { margin-bottom: 0 !important; }
+
+/* --- Så går det till: number is the graphic, no icons ---------------- */
+.te-step-n {
+  font-size: 2.75rem; line-height: 1; font-weight: 800; margin: 0 0 .4rem;
+  color: var(--wp--preset--color--pine); opacity: .32; letter-spacing: -.03em;
+}
+.te-step h3 { margin: 0 0 .35rem; }
+.te-step { padding-top: var(--wp--preset--spacing--30); border-top: 2px solid var(--wp--preset--color--ink); }
+.te-step p:last-child { margin-bottom: 0; }
+
+/* --- FAQ: native details, no JavaScript ------------------------------ */
+.te-faq-item {
+  border-bottom: 1px solid var(--wp--preset--color--line);
+  padding: var(--wp--preset--spacing--30) 0;
+}
+.te-faq-item:first-child { border-top: 1px solid var(--wp--preset--color--line); }
+.te-faq-item summary {
+  cursor: pointer; font-weight: 600; list-style: none;
+  font-size: var(--wp--preset--font-size--large); padding-right: 2rem; position: relative;
+}
+.te-faq-item summary::-webkit-details-marker { display: none; }
+.te-faq-item summary::after {
+  content: "+"; position: absolute; right: 0; top: -.1em;
+  font-weight: 400; font-size: 1.5rem; color: var(--wp--preset--color--pine);
+}
+.te-faq-item[open] summary::after { content: "−"; }
+.te-faq-item p { margin: .6rem 0 .2rem; max-width: 62ch; }
+
+/* --- Avslutande uppmaning -------------------------------------------- */
+.te-sec-final .wp-block-buttons { gap: .7rem; }
+
+@media (max-width: 781px) {
+  .te-rating { position: static; }
+  .te-rating-num { font-size: 3.25rem; }
+  .te-review p:nth-child(2) { font-size: var(--wp--preset--font-size--medium); }
+  .te-faq-item summary { font-size: var(--wp--preset--font-size--medium); }
+}
+
+/* --- Hero form card: proof first, big, then one field ----------------- */
+.te-sec-hero .is-style-card { padding: var(--wp--preset--spacing--50) !important; }
+.te-proof {
+  display: flex; align-items: baseline; gap: .6rem; flex-wrap: wrap;
+  padding-bottom: var(--wp--preset--spacing--30);
+  border-bottom: 1px solid var(--wp--preset--color--line);
+  margin-bottom: var(--wp--preset--spacing--30);
+}
+.te-proof p { margin: 0; }
+.te-proof-score strong { font-size: 2.5rem; line-height: 1; letter-spacing: -.02em; }
+.te-proof-score .te-stars::before { font-size: 1.15rem; letter-spacing: 2px; }
+.te-proof-count { color: var(--wp--preset--color--ink-soft); }
+.te-sec-hero .is-style-card h2 { margin: 0 0 var(--wp--preset--spacing--30); }
+
+/* bigger tap targets in the hero form: this is the one thing on the page
+   that has to work with a thumb, on a phone, in a hurry */
+.te-sec-hero .npl-input { font-size: 1.0625rem; padding: .95rem 1rem; }
+.te-sec-hero .npl-form button,
+.te-sec-hero .wp-element-button { font-size: 1.0625rem; padding: 1rem 1.2rem; }
+.te-sec-hero .npl-fine, .te-sec-hero .npl-form small { font-size: .8125rem; }
+
+@media (max-width: 781px) {
+  .te-proof-score strong { font-size: 2.1rem; }
+}
