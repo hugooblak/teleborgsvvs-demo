@@ -5,6 +5,7 @@
  */
 return array(
 	'foretag'        => 'Teleborgs VVS AB',
+	'bransch'        => 'VVS-montör',
 	'telefon'        => '070-601 42 01',
 	'telefon_tel'    => '+46706014201',
 	'ort'            => 'Växjö',
